@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CityDetailViewController.h
 //  Assessment2
 //
 //  Created by Matt Larkin on 3/20/15.
@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "City.h"
 
-@interface ViewController : UIViewController
+@interface CityDetailViewController : UIViewController
 
+@property City *city;
 
 @end
-
