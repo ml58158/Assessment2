@@ -22,6 +22,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
 @property BOOL isEditing;
+@property BOOL isEditButtonPressed;
+
 
 @property NSString *url;
 
@@ -69,25 +71,50 @@
  *  @param sender UIBarButtonItem "Edit"
  */
 
-- (IBAction)onEditButtonPressed:(UIButton *)sender {
-
+- (IBAction)onEditButtonPressed:(UIBarButtonItem *)sender {
 
     if (self.editing) {
-        self.editing = YES;
-        self.title =@"Done";
-        self.nameTextField.hidden = NO;
-        self.stateTextField.hidden = NO;
-        self.nameLabel.hidden = YES;
-        self.stateLabel.hidden = YES;
-
-    } else {
-        self.title = @"Edit";
         self.editing = NO;
-        self.nameTextField.hidden = YES;
-        self.stateTextField.hidden = YES;
         self.nameLabel.hidden = NO;
         self.stateLabel.hidden = NO;
+        self.nameTextField.hidden = YES;
+        self.stateTextField.hidden = YES;
+        self.city.cityName = self.nameTextField.text;
+        self.city.state = self.stateTextField.text;
+        self.nameLabel.text = self.city.cityName;
+        self.stateLabel.text = self.city.state;
+        sender.title = @"Edit";
+        [self saveData];
     }
+    else {
+        self.editing = YES;
+        self.nameLabel.hidden = YES;
+        self.stateLabel.hidden = YES;
+        self.nameTextField.hidden = NO;
+        self.stateTextField.hidden = NO;
+        self.nameTextField.text = self.city.cityName;
+        self.stateTextField.text = self.city.state;
+        sender.title = @"Done";
+
+        [self saveData];
+    }
+
+   //self.stateTextField.hidden = !self.stateTextField.hidden;
+
+
+}
+
+- (IBAction)onTapGesture:(UITapGestureRecognizer *)gesture {
+
+    CGPoint touchPoint = [gesture locationInView:self.view];
+
+    if (CGRectContainsPoint(self.wikiLabel.frame, touchPoint)) {
+        [self performSegueWithIdentifier:@"WikiSegue" sender:self];
+    }
+}
+
+- (IBAction)onSetTitleButtonPressed:(UIButton *)sender {
+    [self.delegate onSetTitlePressed:self.nameLabel.text];
 }
 
 /**
@@ -98,17 +125,17 @@
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"WikiSegue"]) {
-       webViewController  *vc = (webViewController *) segue.destinationViewController;
-        vc.urlString = self.url;
-    }
+    webViewController *vc = segue.destinationViewController;
+    vc.cityName = self.city;
 }
 
+/**
+ *  Unwind back to previous view controller
+ *
+ *  @param sender webview controller
+ */
 
-- (IBAction)unwindFromWebView:(UIStoryboardSegue *)sender
-{
-
-}
+#pragma mark - city delegate
 
 - (void)wikipediaURLForCity:(NSString *)cityName
 {

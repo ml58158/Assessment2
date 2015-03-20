@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "City.h"
 
+@protocol DetailDelegate <NSObject>
+
+-(void)onSetTitlePressed:(NSString *)title;
+
+@end
+
 @interface CityDetailViewController : UIViewController
 
 @property City *city;
+@property (weak, nonatomic) id<DetailDelegate> delegate;
 
 @end

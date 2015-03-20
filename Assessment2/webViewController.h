@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "City.h"
 
 @interface webViewController : UIViewController
 
 @property NSString *urlString;
+@property City *cityName;
 
 @end

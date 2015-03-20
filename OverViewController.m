@@ -13,6 +13,7 @@
 @interface OverViewController () <UITableViewDataSource, UITableViewDelegate>
 @property NSMutableArray *cityArray;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UINavigationItem *titleItem;
 @property BOOL isEditing;
 
 @end
@@ -40,6 +41,13 @@
      */
     self.editing = FALSE;
 }
+
+#pragma mark - Custom Delegate Methods
+-(void)onSetTitlePressed:(NSString *)title
+{
+    self.titleItem.title = title;
+}
+
 
 #pragma mark - UI TableView DataSource
 
@@ -118,6 +126,10 @@
         [self.cityArray removeObjectAtIndex:indexPath.row];
         [tableView reloadData];
     }
+}
+
+- (IBAction)unwindFromWebView:(UIStoryboardSegue *)sender
+{
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
