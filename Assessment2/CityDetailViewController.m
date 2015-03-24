@@ -8,17 +8,21 @@
 
 #import "CityDetailViewController.h"
 #import "webViewController.h"
+#import "City.h"
 
-@interface CityDetailViewController () <UITextFieldDelegate , CityDelegate>
+@interface CityDetailViewController () <UITextFieldDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextField *stateTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *wikiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (strong, nonatomic) IBOutlet UIButton *titleChange;
+
+@property BOOL inEditModeWhenButtonPressed;
 
 @property NSString *url;
 
@@ -28,14 +32,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.nameLabel.text = self.nameTextField.text = self.city.cityName;
-    self.stateLabel.text = self.stateTextField.text = self.city.state;
-    self.wikiLabel.text = [NSString stringWithFormat:@"http://en.wikipedia.org/wiki/%@", self.city.cityName];
+    self.nameLabel.text = self.nameTextField.text = self.selectedCity.cityName;
+    self.stateLabel.text = self.stateTextField.text = self.selectedCity.state;
+    self.imageView.image = self.selectedCity.image;
 
-    self.imageView.image = self.city.image;
+}
 
-    self.city.delegate = self;
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"WikiSegue"])
+    {
+        webViewController *vc = segue.destinationViewController;
+        vc.selectedCity = self.selectedCity.cityName;
+    }
 }
 
 
@@ -48,7 +57,6 @@
  */
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self saveData];
     return YES;
 }
 
@@ -60,9 +68,13 @@
 
 -(IBAction)onWikiLabelTapped:(UITapGestureRecognizer *)tapGestureRecongizer
 {
-    [self.city getWikipediaURL];
+    CGPoint point = [tapGestureRecongizer locationInView:self.view];
+    if (CGRectContainsPoint(self.wikiLabel.frame, point))
+    {
+        [self performSegueWithIdentifier:@"WikiSegue" sender:nil];
+    }
 
-    
+
 }
 
 #pragma mark - IBActions
@@ -76,104 +88,49 @@
 
 - (IBAction)onEditButtonPressed:(UIBarButtonItem *)sender {
 
-    if ([sender.title isEqualToString:@"Edit"]) {
-        sender.title = @"Done";
-        self.nameTextField.hidden = NO;
-        self.stateTextField.hidden = NO;
-    }else {
-        sender.title = @"Edit";
-        self.nameTextField.hidden = YES;
-        self.stateTextField.hidden = YES;
+    {
+        //If not in edit mode when button is pressed, enable editing
+        if (!self.inEditModeWhenButtonPressed)
+        {
+            //Enable editing
+            self.editButton.title = @"Done";
+            //Make sure text fields are empty to beign with
+            self.nameTextField.text = @"";
+            self.stateTextField.text = @"";
+            //sets placeholder text to the current city and state label text
+            self.nameTextField.placeholder = self.nameLabel.text;
+            self.stateTextField.placeholder = self.stateLabel.text;
+
+        }
+        //Only allow changes if both city and state are entered in text fields
+        else if (!([self.nameTextField.text isEqualToString:@""] || [self.stateTextField.text isEqualToString:@""]))
+        {
+            //Save new input
+            self.editButton.title = @"Edit";
+
+            self.nameLabel.text = self.nameTextField.text;
+            [self.selectedCity setState: self.nameTextField.text];
+
+            self.stateLabel.text = self.stateTextField.text;
+            [self.selectedCity setState: self.stateTextField.text];
+        }
+        //show text fields when in edit mode
+        self.nameTextField.hidden = self.inEditModeWhenButtonPressed;
+        self.stateTextField.hidden = self.inEditModeWhenButtonPressed;
         
-        [self saveData];
+        self.inEditModeWhenButtonPressed = !self.inEditModeWhenButtonPressed;
     }
+
+
 }
 
 
-//    if (self.editing) {
-//        self.editing = NO;
-//        self.nameLabel.hidden = NO;
-//        self.stateLabel.hidden = NO;
-//        self.nameTextField.hidden = YES;
-//        self.stateTextField.hidden = YES;
-//        self.city.cityName = self.nameTextField.text;
-//        self.city.state = self.stateTextField.text;
-//        self.nameLabel.text = self.city.cityName;
-//        self.stateLabel.text = self.city.state;
-//        sender.title = @"Edit";
-//        [self saveData];
-//    }
-//    else {
-//        self.editing = YES;
-//        self.nameLabel.hidden = YES;
-//        self.stateLabel.hidden = YES;
-//        self.nameTextField.hidden = NO;
-//        self.stateTextField.hidden = NO;
-//        self.nameTextField.text = self.city.cityName;
-//        self.stateTextField.text = self.city.state;
-//        sender.title = @"Done";
-//
-//        [self saveData];
-//    }
-
-   //self.stateTextField.hidden = !self.stateTextField.hidden;
-
-
-//}
-
-
-
-
-- (IBAction)onSetTitleButtonPressed:(UIButton *)sender {
-    [self.delegate onSetTitlePressed:self.nameLabel.text];
-}
-
-
-
-/**
- *  WebView Segue
- *
- *  @param segue  To Wiki View Controller
- *  @param sender Detail View Controller
- */
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    webViewController *vc = segue.destinationViewController;
-//    vc.cityName = self.city;
-//}
-
-/**
- *  Unwind back to previous view controller
- *
- *  @param sender webview controller
- */
-
-#pragma mark - city delegate
-
-- (void)wikipediaURLForCity:(NSString *)cityName
+- (IBAction)onTitleChangeButtonTapped:(id)sender
 {
-    self.url = [NSString stringWithFormat:@"http://en.wikipedia.org/wiki/%@", self.city.cityName];
+    [self.delegate onSetTitleTapped:self.selectedCity.cityName];
+    NSLog(@"%@", self.selectedCity.cityName);
 
-    [self performSegueWithIdentifier:@"WikiSegue" sender:self];
-    
 }
 
-
-#pragma mark - Helper Methods
-
-
-/**
- *  Helper Method to Save Data From Text Fields and commit them to memory.
- */
-- (void)saveData
-{
-    [self.nameTextField resignFirstResponder];
-    [self.stateTextField resignFirstResponder];
-
-    if ([self.nameTextField.text length] > 0 && [self.stateTextField.text length] > 0) {
-        self.city.cityName = self.nameLabel.text = self.nameTextField.text;
-        self.city.state = self.stateLabel.text = self.stateTextField.text;
-    }
-}
 
 @end

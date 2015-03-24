@@ -12,13 +12,14 @@
 
 @protocol DetailDelegate <NSObject>
 
--(void)onSetTitlePressed:(NSString *)title;
+-(void)onSetTitleTapped:(NSString *)cityName;
 
 @end
 
-@interface CityDetailViewController : UIViewController
+@interface CityDetailViewController : UIViewController;
 
-@property City *city;
+@property City *selectedCity;
+
 @property (weak, nonatomic) id<DetailDelegate> delegate;
 
 @end

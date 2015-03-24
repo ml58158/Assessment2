@@ -13,7 +13,9 @@
 
 @interface webViewController () <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIButton *closeButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property NSString *wiki;
 
 
 @end
@@ -22,58 +24,38 @@
 
 #pragma mark - View Methods
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.webView.delegate = self;
-
-    [self goToURLWithString:[self generateProperStringForURL]];
-
-}
-
-#pragma mark - Delegate Methods
-
-//starting spinner when loading
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-    self.spinner.hidden = NO;
-    [self.spinner startAnimating];
+        [super viewDidLoad];
+     self.wiki = [NSString stringWithFormat:@"https://en.wikipedia.org/wiki/%@", self.selectedCity];
+    [self loadUrlRequestFromString:[self.wiki stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
 
 }
 
-//ending spinner when finished loading
--(void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [self.spinner stopAnimating];
-    self.spinner.hidden = YES;
-}
 
-
-#pragma mark - IBActions
-//back button pressed - dismisses current view
-- (IBAction)onBackButtonPressed:(UIButton *)sender {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
-
-#pragma mark - Helper Methods
-//Helper method: Loads page using URL string
-- (void) goToURLWithString:(NSString *)string
-{
-    if (![string hasPrefix:@"http://"])
+    -(void)webViewDidStartLoad:(UIWebView *)webView
     {
-        string = [NSString stringWithFormat:@"http://%@", string];
+        self.spinner.hidden = NO;
+        [self.spinner startAnimating];
+
     }
 
-    NSURL *addressUrl = [NSURL URLWithString:string];
-    NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressUrl];
-    [self.webView loadRequest:addressRequest];
+    -(void)webViewDidFinishLoad:(UIWebView *)webView
+    {
+        [self.spinner stopAnimating];
+        self.spinner.hidden = YES;
+        
+    }
+- (IBAction)onCloseButtonTapped:(UIBarButtonItem *)sender {
+[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 
 }
 
-//helper method: replaces black spaces with underlines in order to get to the correct URL
--(NSString *)generateProperStringForURL
+#pragma mark -Helper Methods
+
+-(void)loadUrlRequestFromString:(NSString *)string
 {
-    NSString * string1 = [NSString stringWithFormat:@"http://en.wikipedia.org/wiki/%@", self.cityName.cityName];
-    NSString * returnString = [string1 stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    return returnString;
-    
+    NSURL *url = [NSURL URLWithString:string];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
+
 @end;

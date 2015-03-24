@@ -22,9 +22,5 @@
     return self;
 }
 
--(void)getWikipediaURL
-{
-    [self.delegate wikipediaURLForCity:self.cityName];
-}
 
 @end

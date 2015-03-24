@@ -12,6 +12,6 @@
 @interface webViewController : UIViewController
 
 @property NSString *urlString;
-@property City *cityName;
+@property NSString *selectedCity;
 
 @end

@@ -39,13 +39,13 @@
     /**
      *  Sets Editing Function
      */
-    self.editing = FALSE;
+    //self.editing = FALSE;
 }
 
 #pragma mark - Custom Delegate Methods
--(void)onSetTitlePressed:(NSString *)title
+-(void)changeTitle:(NSString *)newTitle
 {
-    self.titleItem.title = title;
+    self.navigationItem.title = newTitle;
 }
 
 
@@ -128,9 +128,13 @@
     }
 }
 
-- (IBAction)unwindFromWebView:(UIStoryboardSegue *)sender
+#pragma mark - Change Title Delegation
+
+-(void)changeTitleButtonTapped:(NSString *)cityName
 {
+    self.navigationItem.title = cityName;
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -140,7 +144,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         City *city = [self.cityArray objectAtIndex:indexPath.row];
         
-        vc.city = city;
+        vc.selectedCity = city;
     }
 }
 @end

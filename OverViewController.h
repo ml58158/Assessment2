@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface OverViewController : UIViewController
+@property NSMutableArray *cities;
+
 
 @end

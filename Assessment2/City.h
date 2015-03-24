@@ -9,18 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol CityDelegate <NSObject>
-
--(void)wikipediaURLForCity:(NSString *)cityName;
-
-@end
 
 @interface City : NSObject
 @property NSString *cityName;
 @property NSString *state;
 @property UIImage  *image;
-
-@property id<CityDelegate> delegate;
 
 -(instancetype)initWithName:(NSString *)cityName andState:(NSString *)state;
 
