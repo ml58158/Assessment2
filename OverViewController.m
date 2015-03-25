@@ -14,6 +14,7 @@
 @property NSMutableArray *cityArray;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *titleItem;
+@property City *currentCity;
 @property BOOL isEditing;
 
 @end
@@ -40,6 +41,12 @@
      *  Sets Editing Function
      */
     //self.editing = FALSE;
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
 }
 
 
@@ -70,6 +77,8 @@
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
+
+
 
 /**
  *  Edit Button Logic
@@ -137,7 +146,6 @@
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         City *city = [self.cityArray objectAtIndex:indexPath.row];
-        
         vc.selectedCity = city;
     }
 }
