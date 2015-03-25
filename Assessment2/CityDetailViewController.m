@@ -103,7 +103,7 @@
 
         }
         //Only allow changes if both city and state are entered in text fields
-        else if (([self.nameTextField.text isEqualToString:@""] || [self.stateTextField.text isEqualToString:@""]))
+        else //if (//([self.nameTextField.text isEqualToString:@""] || [self.stateTextField.text isEqualToString:@""]))
         {
             //Save new input
             self.editButton.title = @"Edit";
