@@ -12,7 +12,7 @@
 
 @protocol DetailDelegate <NSObject>
 
--(void)onSetTitleTapped:(NSString *)cityName;
+-(void)onSetTitleButtonTapped:(NSString *)cityName;
 
 @end
 

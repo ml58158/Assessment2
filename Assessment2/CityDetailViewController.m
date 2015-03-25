@@ -10,7 +10,7 @@
 #import "webViewController.h"
 #import "City.h"
 
-@interface CityDetailViewController () <UITextFieldDelegate>
+@interface CityDetailViewController () <UITextFieldDelegate, UIAlertViewDelegate, DetailDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -103,7 +103,7 @@
 
         }
         //Only allow changes if both city and state are entered in text fields
-        else if (!([self.nameTextField.text isEqualToString:@""] || [self.stateTextField.text isEqualToString:@""]))
+        else if (([self.nameTextField.text isEqualToString:@""] || [self.stateTextField.text isEqualToString:@""]))
         {
             //Save new input
             self.editButton.title = @"Edit";
@@ -125,9 +125,10 @@
 }
 
 
-- (IBAction)onTitleChangeButtonTapped:(id)sender
+- (IBAction)onSetTitleButtonTapped:(UIButton *)sender
 {
-    [self.delegate onSetTitleTapped:self.selectedCity.cityName];
+    [self.delegate onSetTitleButtonTapped:
+     self.nameLabel.text];
     NSLog(@"%@", self.selectedCity.cityName);
 
 }

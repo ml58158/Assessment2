@@ -42,12 +42,6 @@
     //self.editing = FALSE;
 }
 
-#pragma mark - Custom Delegate Methods
--(void)changeTitle:(NSString *)newTitle
-{
-    self.navigationItem.title = newTitle;
-}
-
 
 #pragma mark - UI TableView DataSource
 
@@ -130,9 +124,9 @@
 
 #pragma mark - Change Title Delegation
 
--(void)changeTitleButtonTapped:(NSString *)cityName
+-(void)onSetTitleButtonTapped:(NSString *)cityName
 {
-    self.navigationItem.title = cityName;
+   self.navigationItem.title = cityName;
 }
 
 

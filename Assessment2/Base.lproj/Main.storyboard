@@ -253,7 +253,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onTitleChangeButtonTapped:" destination="j3u-T3-wIz" eventType="touchUpInside" id="ah5-5H-bK4"/>
+                                    <action selector="onSetTitleButtonTapped:" destination="j3u-T3-wIz" eventType="touchUpInside" id="dwL-Xv-FEY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -318,11 +318,10 @@
                                 <exclude reference="pR5-XE-uvA"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="UJZ-Ag-Geg"/>
-                                <exclude reference="dy3-QV-CSB"/>
                                 <exclude reference="CQa-G7-zQ2"/>
                                 <exclude reference="Phj-0R-A6c"/>
                                 <exclude reference="UHK-ou-QoB"/>
+                                <exclude reference="3Ho-W2-Qbu"/>
                                 <exclude reference="2NU-GF-65H"/>
                                 <exclude reference="2eR-f2-TXl"/>
                                 <exclude reference="BZe-hM-Kza"/>
@@ -333,25 +332,26 @@
                                 <exclude reference="ejX-UF-nxA"/>
                                 <exclude reference="hA7-lI-aYl"/>
                                 <exclude reference="iBH-er-V4O"/>
+                                <exclude reference="4Sr-pY-9ww"/>
+                                <exclude reference="ibc-au-gxW"/>
                                 <exclude reference="8pn-95-IMz"/>
                                 <exclude reference="GEc-p8-2H0"/>
                                 <exclude reference="Tz0-xe-ySU"/>
+                                <exclude reference="ggf-UX-6XK"/>
+                                <exclude reference="UJZ-Ag-Geg"/>
+                                <exclude reference="dy3-QV-CSB"/>
                                 <exclude reference="Aql-vK-kUI"/>
                                 <exclude reference="FjZ-mj-ndM"/>
                                 <exclude reference="KEp-oZ-cNe"/>
                                 <exclude reference="aTO-K1-e2i"/>
                                 <exclude reference="itM-NM-l4i"/>
                                 <exclude reference="mdc-dU-DUf"/>
-                                <exclude reference="3Ho-W2-Qbu"/>
-                                <exclude reference="4Sr-pY-9ww"/>
-                                <exclude reference="ibc-au-gxW"/>
+                                <exclude reference="Nf6-VR-0j2"/>
+                                <exclude reference="aAz-bJ-qeF"/>
                                 <exclude reference="AhU-dl-U2N"/>
                                 <exclude reference="ER7-IA-Nzd"/>
                                 <exclude reference="XK3-vf-avJ"/>
                                 <exclude reference="wVy-i6-OsF"/>
-                                <exclude reference="Nf6-VR-0j2"/>
-                                <exclude reference="aAz-bJ-qeF"/>
-                                <exclude reference="ggf-UX-6XK"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -368,11 +368,10 @@
                                 <include reference="pR5-XE-uvA"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="UJZ-Ag-Geg"/>
-                                <include reference="dy3-QV-CSB"/>
                                 <include reference="CQa-G7-zQ2"/>
                                 <include reference="Phj-0R-A6c"/>
                                 <include reference="UHK-ou-QoB"/>
+                                <include reference="3Ho-W2-Qbu"/>
                                 <include reference="2NU-GF-65H"/>
                                 <include reference="2eR-f2-TXl"/>
                                 <include reference="BZe-hM-Kza"/>
@@ -383,25 +382,26 @@
                                 <include reference="ejX-UF-nxA"/>
                                 <include reference="hA7-lI-aYl"/>
                                 <include reference="iBH-er-V4O"/>
+                                <include reference="4Sr-pY-9ww"/>
+                                <include reference="ibc-au-gxW"/>
                                 <include reference="8pn-95-IMz"/>
                                 <include reference="GEc-p8-2H0"/>
                                 <include reference="Tz0-xe-ySU"/>
+                                <include reference="ggf-UX-6XK"/>
+                                <include reference="UJZ-Ag-Geg"/>
+                                <include reference="dy3-QV-CSB"/>
                                 <include reference="Aql-vK-kUI"/>
                                 <include reference="FjZ-mj-ndM"/>
                                 <include reference="KEp-oZ-cNe"/>
                                 <include reference="aTO-K1-e2i"/>
                                 <include reference="itM-NM-l4i"/>
                                 <include reference="mdc-dU-DUf"/>
-                                <include reference="3Ho-W2-Qbu"/>
-                                <include reference="4Sr-pY-9ww"/>
-                                <include reference="ibc-au-gxW"/>
+                                <include reference="Nf6-VR-0j2"/>
+                                <include reference="aAz-bJ-qeF"/>
                                 <include reference="AhU-dl-U2N"/>
                                 <include reference="ER7-IA-Nzd"/>
                                 <include reference="XK3-vf-avJ"/>
                                 <include reference="wVy-i6-OsF"/>
-                                <include reference="Nf6-VR-0j2"/>
-                                <include reference="aAz-bJ-qeF"/>
-                                <include reference="ggf-UX-6XK"/>
                             </mask>
                         </variation>
                         <connections>
@@ -450,6 +450,9 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sda-kj-RBv">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="72" width="600" height="484"/>
+                                </variation>
                             </webView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SdN-3x-bfW">
                                 <rect key="frame" x="-10" y="-10" width="20" height="20"/>
@@ -468,6 +471,9 @@
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                </variation>
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
